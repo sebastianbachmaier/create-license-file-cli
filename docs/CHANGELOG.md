@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/sebastianbachmaier/create-license-file-cli/compare/v1.0.2...v1.0.3) (2024-01-25)
+
+
+### Bug Fixes
+
+* license files ([4bb84b8](https://github.com/sebastianbachmaier/create-license-file-cli/commit/4bb84b802a0475594d000f0cba97a8bf69855de6))
+
 ## [1.0.2](https://github.com/sebastianbachmaier/create-license-file-cli/compare/v1.0.1...v1.0.2) (2024-01-25)
 
 
