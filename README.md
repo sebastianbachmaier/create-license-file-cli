@@ -1,6 +1,6 @@
 # create-license-file-cli
 
-npx command that create a license file either by specifying author pr parsing `package.json`
+npx command that create a license file either by parsing `package.json` or specifying author and license 
 
 ### usage
 

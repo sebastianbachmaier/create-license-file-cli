@@ -4,7 +4,7 @@ node_modules
 .DS_Store
 .npm
 .git
-create-npm-package-cli-*.tgz
+*-*.tgz
 package/
 .DS_Store
 src

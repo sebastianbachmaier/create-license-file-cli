@@ -130,7 +130,7 @@ dist
 .pnp.*
 
 
-create-npm-package-cli-*.tgz
+*-*.tgz
 package/
 .DS_Store
 bin
