@@ -20,7 +20,7 @@
     "tool"
   ],
   "author": "Sebastian Bachmaier",
-  "license": "MIT2",
+  "license": "MIT",
   "homepage": "https://github.com/sebastianbachmaier/create-license-file-cli#readme",
   "devDependencies": {
     "@semantic-release/changelog": "^6.0.3",
