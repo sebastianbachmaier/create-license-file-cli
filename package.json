@@ -1,6 +1,6 @@
 {
   "name": "create-license-file-cli",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Create a license file for your project based on the npm license you choose.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
