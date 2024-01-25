@@ -1,81 +1,54 @@
-import fs from 'node:fs';
-import { info } from 'console';
+#!/usr/bin/env node
 
-/* CONSTANTS */
-const LICENSE_DIR = `${__dirname}/../LICENSES` as const;
-const EXIT_FAILURE = 1 as const;
-const EXIT_SUCCESS = 0 as const;
+import { ArgumentParser } from 'argparse';
+import pkg from '../package.json';
+import { main } from './main';
 
+/** CONSTANTS */
+const LICENSES = [
+  'MIT',
+  'APACHE-2.0',
+  'AGPL-3.0',
+  'GPL-3.0',
+  'LGPL-3.0',
+  'MPL-2.0',
+  'UNLICENSED',
+];
 
-/**
- * getLicenses
- * @returns Record<string, string> - key: license name, value: license text template
- */
-const getLicenses = () =>
-  fs.readdirSync(LICENSE_DIR).reduce(
-    (licenses: Record<string, string>, file: string) => ({
-      ...licenses,
-      [file]: fs.readFileSync(`${LICENSE_DIR}/${file}`, 'utf8'),
-    }),
-    {} as Record<string, string>
-  );
+/* ARGUMENTS */
+const parser = new ArgumentParser({
+  description: 'Create npm package cli',
+});
 
-/**
- * readPackageJson
- * @returns Record<string, string> | undefined - package.json as json object
- * @throws Error - package.json is not valid json
- */
-function readPackageJson(): Record<string, string> | undefined {
-  try {
-    const packageJson = fs.readFileSync('./package.json', 'utf8');
-    return JSON.parse(packageJson);
-  } catch (e) {
-    error('package.json is not valid json');
-  }
-}
+parser.add_argument('-v', '--version', {
+  action: 'version',
+  version: pkg.version,
+  help: 'Show version number',
+});
 
-/**
- * error
- * @param message - error message
- */
-const error = (message: string) => console.error(`\x1b[31m${message}\x1b[0m`);
+parser.add_argument('-l', '--license', {
+  action: 'store',
+  dest: 'license',
+  help: 'name of the license you want to generate',
+  choices: LICENSES,
+  type: (value: string) => value.toUpperCase(),
+  required: false,
+});
 
-/**
- * main
- * @param lname - license name
- * @param author - author name, default: package.json author
- * @returns number - exit code
- */
-export function main(license?: string, author?: string, verbose?: boolean) {
-   /* package.json */
-   const packageJson = readPackageJson();
-  
-   author ??= packageJson?.author;
-   license ??= packageJson?.license;
-   if (!author || !license) {
-     error('author or license not found');
-     return EXIT_FAILURE;
-   }
+parser.add_argument('-a', '--author', {
+  help: 'Author name',
+  dest: 'author',
+  required: false,
+});
 
-  const licenses = getLicenses();
-  const licenseText = licenses[`${license}.md`];
+parser.add_argument('--verbose', {
+  help: 'Verbose mode',
+  dest: 'verbose',
+  action: 'store_true',
+  required: false,
+});
 
-  /** license not found */
-  if (!licenseText) {
-    error(`License ${license} not found`);
-    return EXIT_FAILURE;
-  }
+const args: { license?: string; author?: string; verbose?: boolean } =
+  parser.parse_args();
 
-  /* replace [year] and [fullname] */
-  const filledLicense = licenseText
-    .replace('[year]', new Date().getFullYear().toString())
-    .replace('[fullname]', author);
-
-  if (verbose) {
-    info(filledLicense);
-  }
-
-  /* write license to license file */
-  fs.writeFileSync('./LICENSE.md', filledLicense, 'utf8');
-  return EXIT_SUCCESS;
-}
+process.exit(main(args.license, args.author, args.verbose));

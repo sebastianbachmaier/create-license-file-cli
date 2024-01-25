@@ -1,9 +1,9 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
-    "target": "ES2017",
+    "target": "ES6",
     "module": "NodeNext",
-    "lib": ["es2017", "es7", "es6", "dom"],
+    "lib": ["ES2015", "es6", "dom"],
     "outDir": "dist",
     "baseUrl": "./",
     "strict": true,
@@ -14,5 +14,5 @@
     "resolveJsonModule": true,
     "sourceMap": true
   },
-  "exclude": ["node_modules", "dist", "./vitest.config.m*"],
+  "exclude": ["node_modules", "dist", "./vitest.config.m*"]
 }

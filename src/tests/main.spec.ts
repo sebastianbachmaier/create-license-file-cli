@@ -1,14 +1,11 @@
 import {
   afterEach,
   assert,
-  beforeEach,
   describe,
-  expect,
   it,
   vi,
 } from 'vitest';
-import { main } from 'src/index';
-import { readFileSync, writeFileSync, readdirSync } from 'node:fs';
+import { main } from 'src/main';
 
 vi.mock('node:fs', async (importOriginal) => {
   const actual: Record<string, unknown> = await importOriginal();
